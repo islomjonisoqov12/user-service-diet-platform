@@ -1,0 +1,9 @@
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  datasource:
+    password: vcuuGqLQZ6kycqS5dxn1
+    username: postgres
+    url: jdbc:postgresql://containers-us-west-140.railway.app:6408/railway

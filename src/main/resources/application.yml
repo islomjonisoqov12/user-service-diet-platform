@@ -1,0 +1,7 @@
+jwt:
+  access:
+    secret: oCC2oEN-4b73;1p+dvhFQZufHZdSqwKmg6wfn7sHfWqqr1o>ZqS+&DOCigd+45=?Xpx5YBd*3bxvyH4>rW*
+    expire: 60000000000  #  actually : 600000 -> 10 min
+  refresh:
+    secret: VYoZF2aXJxTsayllQn-lggpDbXfhXSGr68Ek3vGolT.lkh29Ug8#+s_mn!=pbpfb9+_IQu2ltrBJJ:>)ndl
+    expire: 172000000
