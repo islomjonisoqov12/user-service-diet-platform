@@ -8,3 +8,9 @@ jwt:
 spring:
   profiles:
     active: prod
+  graphql:
+    graphiql:
+      enabled: true
+#    schema:
+#      printer:
+#        enabled: true

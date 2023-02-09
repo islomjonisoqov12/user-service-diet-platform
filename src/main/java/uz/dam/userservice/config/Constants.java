@@ -16,9 +16,9 @@ public final class Constants {
 
     public static final String SYSTEM = "system";
 
-//    public static final String HAS_ROLE_ADMIN = "hasAuthority('" + AuthoritiesConstants.ADMIN + "')";
-//    public static final String HAS_ROLE_ADMIN_OR_TEACHER = "hasAnyAuthority('" + AuthoritiesConstants.ADMIN + "', '"+ AuthoritiesConstants.TEACHER + "')";
-//    public static final String HAS_ROLE_TEACHER = "hasAuthority('" + AuthoritiesConstants.TEACHER + "')";
+    public static final String HAS_ROLE_SUPER_ADMIN = "hasAuthority('" + AuthoritiesConstants.SUPER_ADMIN + "')";
+    public static final String HAS_ROLE_ADMIN_OR_SUPER_ADMIN = "hasAnyAuthority('" + AuthoritiesConstants.ADMIN + "', '"+ AuthoritiesConstants.SUPER_ADMIN + "')";
+    public static final String HAS_ROLE_OWNER = "hasAuthority('" + AuthoritiesConstants.OWNER + "')";
 
 //    public static final String MAIN_BADGE_PHOTO = "./src/main/resources/badge.pdf";
 

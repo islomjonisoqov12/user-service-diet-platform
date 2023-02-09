@@ -40,14 +40,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     private org.springframework.security.core.userdetails.User createSpringSecurityUser(String lowercaseLogin, User user) {
         // user not active status
-        if (user.getStatus().equals(UserStatus.INACTIVE)) {
-            throw new UserNotActivatedException(DeveloperMessage.builder()
-                    .uz("foydalanuvchi akkounti faol emas iltimos avval akkaunt ni faollashtiring")
-                    .ru("учетная запись пользователя не активна, пожалуйста, сначала активируйте свою учетную запись")
-                    .en("User account is not active, please activate your account first")
-                    .build()
-            );
-        }
+//        if (user.getStatus().equals(UserStatus.INACTIVE)) {
+//            throw new UserNotActivatedException(DeveloperMessage.builder()
+//                    .uz("foydalanuvchi akkounti faol emas iltimos avval akkaunt ni faollashtiring")
+//                    .ru("учетная запись пользователя не активна, пожалуйста, сначала активируйте свою учетную запись")
+//                    .en("User account is not active, please activate your account first")
+//                    .build()
+//            );
+//        }
         // user ban status
         if(user.getStatus().equals(UserStatus.BAN)){
             throw new UserNotActivatedException(DeveloperMessage.builder()

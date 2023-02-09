@@ -21,10 +21,12 @@ import uz.dam.userservice.entities.enums.UserStatus;
 import uz.dam.userservice.exceptions.BadRequestException;
 import uz.dam.userservice.exceptions.enums.ExceptionType;
 import uz.dam.userservice.repositories.RefreshTokenRepository;
+import uz.dam.userservice.repositories.RoleRepository;
 import uz.dam.userservice.repositories.UserRepository;
 import uz.dam.userservice.security.jwt.JwtProvider;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 import static uz.dam.userservice.config.EntityNameConstants.REFRESH_TOKEN;
@@ -32,6 +34,7 @@ import static uz.dam.userservice.config.EntityNameConstants.REFRESH_TOKEN;
 @Service
 @Slf4j
 public class UserService {
+    private final RoleRepository roleRepository;
     @Value("${jwt.access.expire}")
     private Long jwtAccessExpire;
     @Value("${jwt.refresh.expire}")
@@ -45,12 +48,14 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
 
     public UserService(UserRepository repository, AuthenticationManagerBuilder authenticationManagerBuilder, JwtProvider jwtProvider,
-                       RefreshTokenRepository refreshTokenRepository, PasswordEncoder passwordEncoder) {
+                       RefreshTokenRepository refreshTokenRepository, PasswordEncoder passwordEncoder,
+                       RoleRepository roleRepository) {
         this.repository = repository;
         this.authenticationManagerBuilder = authenticationManagerBuilder;
         this.jwtProvider = jwtProvider;
         this.refreshTokenRepository = refreshTokenRepository;
         this.passwordEncoder = passwordEncoder;
+        this.roleRepository = roleRepository;
     }
 
     /**
@@ -95,13 +100,23 @@ public class UserService {
     }
 
     public HttpEntity<JWTokenDto> selfRegister(UserRegisterDto registerDto) {
+
         User user = User.builder()
                 .firstName(registerDto.getFirstName())
                 .email(registerDto.getEmail())
                 .password(passwordEncoder.encode(registerDto.getPassword()))
                 .status(UserStatus.INACTIVE)
+                .role(roleRepository.findById(1L).get())
                 .build();
         repository.save(user);
         return login(new UserLoginDto(registerDto.getEmail(), registerDto.getPassword(), registerDto.getType()));
+    }
+
+    public Optional<User> getUser(Long id) {
+        return repository.findById(id);
+    }
+
+    public List<User> getUsers() {
+        return repository.findAll();
     }
 }

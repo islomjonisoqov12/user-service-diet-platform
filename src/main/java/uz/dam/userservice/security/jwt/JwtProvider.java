@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 import uz.dam.userservice.entities.RefreshToken;
 import uz.dam.userservice.entities.enums.ApplicationType;
 import uz.dam.userservice.repositories.RefreshTokenRepository;
-
-import java.time.LocalDate;
-import java.time.ZoneId;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Function;
