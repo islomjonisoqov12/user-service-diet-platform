@@ -5,3 +5,6 @@ jwt:
   refresh:
     secret: VYoZF2aXJxTsayllQn-lggpDbXfhXSGr68Ek3vGolT.lkh29Ug8#+s_mn!=pbpfb9+_IQu2ltrBJJ:>)ndl
     expire: 172000000
+spring:
+  profiles:
+    active: prod
