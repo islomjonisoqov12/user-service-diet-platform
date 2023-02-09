@@ -14,6 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 //
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.zalando.problem.spring.web.advice.security.SecurityProblemSupport;
 import uz.dam.userservice.security.AuthoritiesConstants;
 import uz.dam.userservice.security.jwt.JWTFilter;
@@ -55,6 +57,18 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
+    public WebMvcConfigurer corsConfigurer(){
+        return new WebMvcConfigurer() {
+            @Override
+            public void addCorsMappings(CorsRegistry registry) {
+                registry.addMapping("/**")
+                        .allowedOrigins("http://localhost:4200", "https://studio.apollographql.com", "http://localhost:3000")
+                        .allowedMethods("POST", "GET", "PATCH", "PUT")
+                        .allowedHeaders("*");
+            }
+        };
+    }
 //    @Bean
 //    CorsConfigurationSource corsConfigurationSource() {
 //        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

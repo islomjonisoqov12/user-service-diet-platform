@@ -20,10 +20,12 @@ type User {
 }
 
 type Role{
+    id: ID
     name: String!
     authorities: [Authority]
 }
 type Authority{
+    id: ID
     name: String!
 }
 
