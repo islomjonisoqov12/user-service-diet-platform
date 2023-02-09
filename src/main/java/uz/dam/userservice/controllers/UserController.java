@@ -22,6 +22,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 @RequestMapping("/api/user")
 @Controller
+//@CrossOrigin(origins = {"https://studio.apollographql.com/"}, methods = {RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH})
 public class UserController {
 
     private final UserService service;
