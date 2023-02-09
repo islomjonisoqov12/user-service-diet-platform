@@ -63,15 +63,14 @@ public class UserService {
      * @param loginDto - param for login
      * @return jwt token with refresh token
      */
-    public HttpEntity<JWTokenDto> login(UserLoginDto loginDto) {
+    public JWTokenDto login(UserLoginDto loginDto) {
         UsernamePasswordAuthenticationToken authenticationToken =
                 new UsernamePasswordAuthenticationToken(loginDto.getEmail(), loginDto.getPassword());
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String accessJwt = jwtProvider.generateAccessToken(authentication);
         String refreshJwt = jwtProvider.generateRefreshToken(authentication, loginDto.getType());
-        JWTokenDto jwTokenDto = new JWTokenDto(accessJwt, refreshJwt, new Date(System.currentTimeMillis() + jwtAccessExpire), new Date(System.currentTimeMillis() + jwtRefreshExpire));
-        return ResponseEntity.ok(jwTokenDto);
+        return new JWTokenDto(accessJwt, refreshJwt, new Date(System.currentTimeMillis() + jwtAccessExpire), new Date(System.currentTimeMillis() + jwtRefreshExpire));
     }
 
     /**
@@ -79,7 +78,7 @@ public class UserService {
      * @param oldRefreshToken given old refresh token
      * @return new access token and new refresh token
      */
-    public HttpEntity<JWTokenDto> refreshToken(String oldRefreshToken) {
+    public JWTokenDto refreshToken(String oldRefreshToken) {
         boolean validateRefreshToken = jwtProvider.validateRefreshToken(oldRefreshToken);
         if (validateRefreshToken) {
             Optional<RefreshToken> optionalRefreshToken = refreshTokenRepository.findByRefreshToken(oldRefreshToken);
@@ -90,16 +89,15 @@ public class UserService {
                 developerMessage.setRu("токен обновления не найден с данным токеном");
                 throw new BadRequestException(developerMessage, ExceptionType.OBJECT_NOT_FOUND, REFRESH_TOKEN);
             }
-            Authentication authentication = jwtProvider.getAuthentication(oldRefreshToken);
+            Authentication authentication = jwtProvider.getAuthenticationForRefreshToken(oldRefreshToken);
             String accessJwt = jwtProvider.generateAccessToken(authentication);
             String refreshJwt = jwtProvider.generateRefreshToken(authentication, optionalRefreshToken.get().getType());
-            JWTokenDto jwTokenDto = new JWTokenDto(accessJwt, refreshJwt, new Date(System.currentTimeMillis() + jwtAccessExpire), new Date(System.currentTimeMillis() + jwtRefreshExpire));
-            return ResponseEntity.ok(jwTokenDto);
+            return new JWTokenDto(accessJwt, refreshJwt, new Date(System.currentTimeMillis() + jwtAccessExpire), new Date(System.currentTimeMillis() + jwtRefreshExpire));
         }
         throw new BadRequestException(new DeveloperMessage("token yaroqsiz", "токен недействителен", "token is invalid"), ExceptionType.JWT_INVALID, REFRESH_TOKEN);
     }
 
-    public HttpEntity<JWTokenDto> selfRegister(UserRegisterDto registerDto) {
+    public JWTokenDto selfRegister(UserRegisterDto registerDto) {
 
         User user = User.builder()
                 .firstName(registerDto.getFirstName())

@@ -152,4 +152,20 @@ public class JwtProvider {
 
         return new UsernamePasswordAuthenticationToken(principal, token, authorities);
     }
+    public Authentication getAuthenticationForRefreshToken(String refreshToken) {
+
+        Claims claims = Jwts.parser().setSigningKey(jwtRefreshSecret).parseClaimsJws(refreshToken).getBody();
+
+//        Claims claims = jwtParser.parseClaimsJws(refreshToken).getBody();
+
+        Collection<? extends GrantedAuthority> authorities = Arrays
+                .stream(claims.get(AUTHORITIES_KEY).toString().split(","))
+                .filter(auth -> !auth.trim().isEmpty())
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+
+        User principal = new User(claims.getSubject(), "", authorities);
+
+        return new UsernamePasswordAuthenticationToken(principal, refreshToken, authorities);
+    }
 }
