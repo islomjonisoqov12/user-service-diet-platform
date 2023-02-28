@@ -6,13 +6,20 @@ jwt:
     secret: VYoZF2aXJxTsayllQn-lggpDbXfhXSGr68Ek3vGolT.lkh29Ug8#+s_mn!=pbpfb9+_IQu2ltrBJJ:>)ndl
     expire: 172000000
 spring:
-  profiles:
-    active: prod
   graphql:
     graphiql:
       enabled: true
+      path: /graphql
+    schema:
+      printer:
+        enabled: true
   main:
     allow-circular-references: true
-#    schema:
-#      printer:
-#        enabled: true
+  application:
+    translation:
+      properties:
+        baseName: messages
+        defaultLocale: uz
+  profiles:
+    active: dev
+#debug: true

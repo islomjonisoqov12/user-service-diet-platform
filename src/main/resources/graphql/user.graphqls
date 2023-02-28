@@ -1,0 +1,155 @@
+scalar DateTime
+"""
+ --------------->>>>>>>>>>>  get request user <<<<<<<<<<<< ------------------ #
+"""
+type Query {
+#    """ --------------- >>>>>>>>>  user <<<<<<<<<< ------------- """
+    userById(id: ID): User
+    users(input: UserCriteria): Page
+    userByEmail(email: String): User
+
+#    """ --------------  >>>>>>>>>>> role <<<<<<<<< -------------- """
+    roleById(id: ID): Role
+    roles(input: Criteria): Page
+    rolesOwner : [Role]
+    authorityById(id:ID): Authority
+    authorities:[Authority]
+}
+"""
+ --------------->>>>>>>>>>>  post request user  <<<<<<<<<<<< ------------------ #
+"""
+type Mutation{
+#    """ --------------- >>>>>>>>>  user <<<<<<<<<< ------------- """
+    login(input: UserLoginDto!): JWTokenDto!
+    selfRegister(input: UserRegisterDto!): JWTokenDto!
+    refreshToken(refreshToken: String!): JWTokenDto!
+
+#    """ --------------  >>>>>>>>>>> role <<<<<<<<< -------------- """
+    createRole(input: RoleDto!): ID!
+    updateRole(input: RoleUpdateDto!): String!
+    deleteRole(id:ID!): String!
+}
+"""
+ --------------->>>>>>>>>>>  input types user  <<<<<<<<<<<< ------------------ #
+"""
+input UserRegisterDto {
+    firstName: String
+    email: String
+    password: String
+    type: ApplicationType
+}
+
+input UserLoginDto{
+    email: String!
+    password: String!
+    type: ApplicationType!
+}
+
+"""
+--------------->>>>>>>>>>>  input types role  <<<<<<<<<<<< ------------------ #
+"""
+input RoleDto {
+    name:String!
+    authorityList: [ID]!
+}
+
+input RoleUpdateDto {
+    id:ID!
+    name:String
+    authorityList: [ID]
+}
+# >>>>>>>>>>>>>>>>> criteria  <<<<<<<<<<<<<<<<<<<
+
+input Criteria  {
+    page: Int
+    size: Int
+    search: String
+}
+
+input UserCriteria{
+    page: Int
+    size: Int
+    search: String
+    roleId: ID
+    gender: Gender
+    startCreatedDate: DateTime
+    endCreatedDate: DateTime
+    status: UserStatus
+    createdBy: String
+}
+
+"""
+ --------------->>>>>>>>>>>  output dto and entities types user  <<<<<<<<<<<< ------------------ #
+"""
+interface GenericEntity {
+    id:ID!
+}
+type User implements GenericEntity{
+    id: ID!
+    firstName: String!
+    lastName: String
+    email: String!
+    phoneNumber: String
+    gender: Gender
+    address: String
+    status: UserStatus
+    role: Role!
+    createdBy: String
+    lastModifiedBy: String
+    createdDate: String
+    lastModifiedDate: String
+}
+type JWTokenDto {
+    accessToken: String!
+    refreshToken: String!
+    expireAccess: String!
+    expireRefresh: String!
+}
+type Role implements GenericEntity{
+    id: ID!
+    name: String!
+    authorities: [Authority]
+}
+type Authority implements GenericEntity{
+    id: ID!
+    name: String!
+}
+union ContentType = User | Role | Authority
+
+
+type Page{
+    empty: Boolean
+    totalPages: Int
+    totalElements: Int
+    numberOfElements: Int
+    content: [ContentType]
+    number: Int
+    size: Int
+    first: Boolean
+    last: Boolean
+    pageable: Pageable
+}
+type Pageable{
+    offset: Int
+    pageNumber: Int
+    pageSize: Int
+}
+
+"""
+ --------------->>>>>>>>>>>  enum types user  <<<<<<<<<<<< ------------------ #
+"""
+enum Gender {
+    MALE
+    FEMALE
+}
+enum UserStatus{
+    ACTIVE
+    INACTIVE
+    BAN
+}
+enum ApplicationType{
+    ADMIN
+    MERCHANT
+    CLIENT_MOBILE
+    CLIENT_DESKTOP
+}

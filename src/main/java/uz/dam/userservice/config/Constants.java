@@ -1,7 +1,7 @@
 package uz.dam.userservice.config;
 
 
-import uz.dam.userservice.security.AuthoritiesConstants;
+import static uz.dam.userservice.security.AuthoritiesConstants.*;
 
 /**
  * Application constants.
@@ -16,9 +16,10 @@ public final class Constants {
 
     public static final String SYSTEM = "system";
 
-    public static final String HAS_ROLE_SUPER_ADMIN = "hasAuthority('" + AuthoritiesConstants.SUPER_ADMIN + "')";
-    public static final String HAS_ROLE_ADMIN_OR_SUPER_ADMIN = "hasAnyAuthority('" + AuthoritiesConstants.ADMIN + "', '"+ AuthoritiesConstants.SUPER_ADMIN + "')";
-    public static final String HAS_ROLE_OWNER = "hasAuthority('" + AuthoritiesConstants.OWNER + "')";
+    public static final String HAS_ROLE_SUPER_ADMIN = "hasAuthority('" + SUPER_ADMIN + "')";
+    public static final String HAS_ROLE_ADMIN_OR_SUPER_ADMIN = "hasAnyAuthority('" + ADMIN + "', '"+ SUPER_ADMIN + "')";
+    public static final String HAS_ROLE_OWNER = "hasAuthority('" + OWNER + "')";
+    public static final String HAS_ROLE_MERCHANT_OR_OWNER = "hasAnyAuthority('" + OWNER + "', '"+ MERCHANT_ADMIN +"')";
 
 //    public static final String MAIN_BADGE_PHOTO = "./src/main/resources/badge.pdf";
 
