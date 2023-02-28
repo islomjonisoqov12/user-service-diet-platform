@@ -18,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity(name = "roles")
-@SQLDelete(sql = "update roles set deleted = true where id = ?1")
+@SQLDelete(sql = "update roles set deleted = true where id = ?")
 @Where(clause = "deleted = false")
 public class Role extends AbstractAuditingEntity{
     private String name;

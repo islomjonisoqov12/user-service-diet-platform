@@ -12,6 +12,8 @@ public final class AuthoritiesConstants {
 
     // Admin owner ni qolida ishlaydigan ishchi/
     public static final String ADMIN = "ROLE_ADMIN";
+    public static final String MERCHANT_ADMIN = "ROLE_MERCHANT_ADMIN";
+
 
     // Saytda mehmon
     public static final String ANONYMOUS = "ROLE_ANONYMOUS";

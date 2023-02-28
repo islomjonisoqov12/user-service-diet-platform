@@ -12,22 +12,19 @@ import java.util.Date;
 public  class ValidationException  extends RuntimeException  {
 
     private Timestamp timestamp;
-    private DeveloperMessage developerMessage;
     private ExceptionType type;
     private String entityName;
 
 
-    public ValidationException(DeveloperMessage message, ExceptionType type, String entityName) {
-        super(message.getUz());
+    public ValidationException(String message, ExceptionType type, String entityName) {
+        super(message);
         this.timestamp = new Timestamp(new Date().getTime());
-        this.developerMessage = message;
         this.type = type;
         this.entityName = entityName;
     }
-    public ValidationException(DeveloperMessage message,ExceptionType type, String entityName, Throwable cause) {
-        super(message.getUz(),cause);
+    public ValidationException(String message,ExceptionType type, String entityName, Throwable cause) {
+        super(message,cause);
         this.timestamp = new Timestamp(new Date().getTime());
-        this.developerMessage = message;
         this.type = type;
         this.entityName = entityName;
     }
